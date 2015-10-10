@@ -9,9 +9,8 @@ import com.badlogic.gdx.math.Vector2;
  * Created by USER on 29/09/2015.
  */
 public class Misil {
-    private com.badlogic.gdx.math.Vector2 position;
-    private com.badlogic.gdx.math.Vector2 velocity;
-    private com.badlogic.gdx.math.Vector2 acceleration;
+    private Vector2 position;
+    private Vector2 velocity;
     private float max= Gdx.graphics.getHeight()-getHeight()-20;
 
     private int width,height;
@@ -22,20 +21,14 @@ public class Misil {
     public Misil(float x, float y, int width, int height) {
         this.width=width;
         this.height=height;
-        position = new com.badlogic.gdx.math.Vector2(x,y);
-        velocity = new com.badlogic.gdx.math.Vector2(-400,0);
-        acceleration = new com.badlogic.gdx.math.Vector2(-460,-20);
-
+        position = new Vector2(x,y);
+        velocity = new Vector2(-500,0);
         bounds= new Rectangle(x,y,width,height);
         maxVelocity=-1000;
 
     }
 
     public void update(float delta){
-        /*velocity.add(acceleration.cpy().scl(delta));
-        if(velocity.x < -300){
-            velocity.x =-300;
-        }*/
 
         position.add(velocity.cpy().scl(delta));
 
@@ -46,9 +39,16 @@ public class Misil {
         bounds.setPosition(position);
     }
 
-    public void onClick() {
+    public void updateGameOver(float delta){
 
+        position.add(velocity.cpy().scl(delta));
+
+        if(position.x <= -getWidth()){
+            position.x= -getWidth()*2;
+        }
+        bounds.setPosition(position);
     }
+
 
     public float getX() {
         return position.x;
@@ -83,6 +83,12 @@ public class Misil {
         if(velocity.x > maxVelocity){
             velocity.add(-x,y);
         }
+    }
 
+    public void onRestart(float x){
+        position.x = x;
+        position.y = ((float)(Math.random()*(max)))-10;
+        velocity.x = -500;
+        velocity.y = 0;
     }
 }

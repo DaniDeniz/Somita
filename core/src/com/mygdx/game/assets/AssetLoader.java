@@ -31,11 +31,11 @@ public class AssetLoader {
 
         TextureRegion[][] regions = TextureRegion.split(helicopter, 450, 213);
         TextureRegion[] helicopterMoving = regions[0];
-        helicopterMove = new Animation(0.1f,helicopterMoving);
+        helicopterMove = new Animation(0.05f,helicopterMoving);
 
         TextureRegion[][] regionsE = TextureRegion.split(explosion, 190, 150);
         TextureRegion[] helicopterExploding = regionsE[0];
-        helicopterExplosion = new Animation(0.15f,helicopterExploding);
+        helicopterExplosion = new Animation(0.1f,helicopterExploding);
 
 
     }

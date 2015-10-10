@@ -9,18 +9,15 @@ public class MisilUpdater {
 
     private Misil[] misils;
     private Score score;
-    private int auxIncrement;
 
     public MisilUpdater(Misil[] misils,Score score) {
         this.misils = misils;
         this.score=score;
-        auxIncrement=0;
     }
 
     public void update(){
         int actualScore = (int) score.getScoreTime();
-        if(actualScore-auxIncrement >= 25){
-            auxIncrement=actualScore;
+        if(actualScore%25==0){
             misilsIncrement();
             if(misils[0].getMaxVelocity() < misils[0].getVelocity().x)
                 score.setIncremment(score.getIncremment()+2);

@@ -1,5 +1,7 @@
 package com.mygdx.game.CollisionManager;
 
+import com.mygdx.game.GameState.GameState;
+import com.mygdx.game.GameWorld.GameWorld;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
 import com.mygdx.game.Model.Vendaje;
@@ -9,16 +11,30 @@ import com.mygdx.game.Model.Vendaje;
  */
 public class CollisionManager {
 
-    public static boolean isCollisionMisil(Helicopter helicopter, Misil[] misils){
+    private GameWorld myWorld;
+
+    private Helicopter helicopter;
+    private Misil[] misils;
+    private Vendaje[] vendajes;
+
+    public CollisionManager(GameWorld myWorld) {
+        this.myWorld = myWorld;
+        helicopter = myWorld.getHelicopter();
+        misils = myWorld.getMisiles();
+        vendajes = myWorld.getVendajes();
+    }
+
+    public boolean isCollisionMisil(){
         for (int i = 0; i < misils.length; i++) {
             if(helicopter.getBounds().overlaps(misils[i].getBounds())) {
+                myWorld.setState(GameState.GAMEOVER);
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isCollisionVendaje(Helicopter helicopter, Vendaje[] vendajes){
+    public boolean isCollisionVendaje(){
         for (int i = 0; i < vendajes.length; i++) {
             if(helicopter.getBounds().overlaps(vendajes[i].getBounds())) {
                 vendajes[i].hasCollided();

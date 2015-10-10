@@ -2,6 +2,8 @@ package com.mygdx.game.InputHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.GameState.GameState;
+import com.mygdx.game.GameWorld.GameWorld;
 import com.mygdx.game.Model.Helicopter;
 
 /**
@@ -9,10 +11,10 @@ import com.mygdx.game.Model.Helicopter;
  */
 public class InputHandler implements InputProcessor {
 
-    private Helicopter helicopter;
+    private GameWorld myWorld;
 
-    public InputHandler(Helicopter helicopter) {
-        this.helicopter = helicopter;
+    public InputHandler(GameWorld myWorld) {
+        this.myWorld = myWorld;
     }
 
     @Override
@@ -32,7 +34,14 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        helicopter.onClick();
+        if(myWorld.getCurrentState()== GameState.RUNNING){
+            myWorld.getHelicopter().onClick();
+        } else if (myWorld.getCurrentState()== GameState.READY){
+            myWorld.setState(GameState.RUNNING);
+        } else if (myWorld.getCurrentState()== GameState.GAMEOVER){
+            myWorld.setState(GameState.READY);
+            myWorld.onRestart();
+        }
         return true;
     }
 

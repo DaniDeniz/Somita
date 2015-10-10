@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by USER on 28/09/2015.
  */
-public class Helicopter {
+public class Helicopter implements ActorInterface{
 
     private Vector2 position;
     private Vector2 velocity;
@@ -18,6 +18,7 @@ public class Helicopter {
     private int width,height;
     private Rectangle bounds;
 
+
     public Helicopter(float x, float y, int width, int height) {
         this.width=width;
         this.height=height;
@@ -25,7 +26,6 @@ public class Helicopter {
         velocity = new Vector2(0,0);
         acceleration = new Vector2(0,-460);
         bounds = new Rectangle(x,y,width,height*100/213);
-
 
     }
 
@@ -44,6 +44,7 @@ public class Helicopter {
             position.y=0;
         }
         bounds.setPosition(position);
+
     }
 
     public void onClick() {
@@ -69,6 +70,15 @@ public class Helicopter {
     public float getHeight() {
         return height;
     }
+
+    @Override
+    public void onRestart() {
+        position.x=33;
+        position.y=Gdx.graphics.getHeight()/2;
+        velocity.y = 0;
+    }
+
+
 
     public Rectangle getBounds(){
         return bounds;

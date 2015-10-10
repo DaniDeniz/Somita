@@ -19,9 +19,7 @@ public class Score {
     }
 
     public void update(float delta){
-        if(!myWorld.isCollided()){
-            scoreTime+=incremment*delta;
-        }
+        scoreTime+=incremment*delta;
     }
 
     public double getValue(){
@@ -42,5 +40,11 @@ public class Score {
 
     public void vendajeCollided(){
         scorePoints+=10;
+    }
+
+    public void onRestart(){
+        scorePoints=0;
+        scoreTime=0;
+        incremment=2;
     }
 }

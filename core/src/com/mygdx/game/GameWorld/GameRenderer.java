@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.GameState.GameState;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
 import com.mygdx.game.Model.Vendaje;
@@ -23,7 +24,6 @@ public class GameRenderer {
     private SpriteBatch batcher;
     private BitmapFont font;
     private int ALTO, ANCHO;
-    private float explodeDelta,previousRuntime;
 
     private int midPointY,gameHeight;
 
@@ -42,16 +42,10 @@ public class GameRenderer {
         shapeRenderer.setProjectionMatrix(cam.combined);
         font = new BitmapFont();
         font.setColor(1, 0, 0, 1);
-        explodeDelta=0;
-        previousRuntime=0;
     }
 
     public void render(float runTime) {
         Gdx.app.log("GameRenderer", "render");
-
-
-
-
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -91,16 +85,16 @@ public class GameRenderer {
     private void renderHelicopter(SpriteBatch batcher,float runTime){
         Helicopter helicopter= myWorld.getHelicopter();
 
-        if(myWorld.isCollided()){
-            TextureRegion animation = AssetLoader.helicopterExplosion.getKeyFrame(explodeDelta,false);
+        if(myWorld.getCurrentState()==GameState.GAMEOVER){
+            TextureRegion animation = AssetLoader.helicopterExplosion.getKeyFrame(myWorld.getExplodeDelta(),false);
             batcher.draw(animation, helicopter.getX(), helicopter.getY()-helicopter.getHeight(), helicopter.getWidth()*3,helicopter.getHeight()*3);
-            if(previousRuntime != 0) {
-                explodeDelta += runTime - previousRuntime;
+            if(myWorld.getPreviousDelta() != 0) {
+                myWorld.setExplodeDelta(myWorld.getExplodeDelta() + runTime - myWorld.getPreviousDelta());
             }
-            previousRuntime=runTime;
+            myWorld.setPreviousDelta(runTime);
 
         } else {
-            if(helicopter.isGoingUp()){
+            if(helicopter.isGoingUp() || myWorld.getCurrentState()== GameState.READY){
                 TextureRegion animation = AssetLoader.helicopterMove.getKeyFrame(runTime,true);
                 batcher.draw(animation, helicopter.getX(), helicopter.getY(), helicopter.getWidth(),helicopter.getHeight());
             } else {
@@ -111,8 +105,8 @@ public class GameRenderer {
 
     private void renderScore(SpriteBatch batcher){
         int score = (int) myWorld.getScore().getValue();
-
-        font.draw(batcher,"Puntuación: "+score,ANCHO/2,ALTO-50);
+        String puntuacion = "Puntuación: "+score;
+        font.draw(batcher,puntuacion,ANCHO/2-3*puntuacion.length(),ALTO-50);
     }
 
     private void renderVendaje(SpriteBatch batcher){
