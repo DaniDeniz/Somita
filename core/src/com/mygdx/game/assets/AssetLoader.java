@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Created by USER on 28/09/2015.
  */
 public class AssetLoader {
-    public static Texture bg,explosion;
+    public static Texture explosion,bgIzq,bgDer;
     public static Texture helicopter,misil,vendaje;
     public static TextureRegion helicopterStopped;
     public static Animation helicopterMove,helicopterExplosion;
@@ -21,13 +21,15 @@ public class AssetLoader {
 
 
     public static void load(){
-        bg = new Texture("bg.png");
         helicopter = new Texture("helicoptero.png");
         misil = new Texture("misilNuclear.png");
         explosion= new Texture("explosion.png");
         vendaje= new Texture("vendaje.png");
 
         helicopterStopped = new TextureRegion(helicopter,450,213);
+
+        bgIzq = new Texture("BgHD.png");
+        bgDer = new Texture("BgHDInv.png");
 
         TextureRegion[][] regions = TextureRegion.split(helicopter, 450, 213);
         TextureRegion[] helicopterMoving = regions[0];
@@ -41,8 +43,11 @@ public class AssetLoader {
     }
 
     public static void dispose(){
-        bg.dispose();
+        vendaje.dispose();
         helicopter.dispose();
         misil.dispose();
+        bgIzq.dispose();
+        bgDer.dispose();
+        explosion.dispose();
     }
 }

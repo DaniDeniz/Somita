@@ -48,7 +48,7 @@ public class Helicopter implements ActorInterface{
     }
 
     public void onClick() {
-        velocity.y = 270;
+        velocity.y = 300;
     }
 
     public float getX() {

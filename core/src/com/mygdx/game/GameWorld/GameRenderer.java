@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.Background;
 import com.mygdx.game.GameState.GameState;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
@@ -56,7 +57,8 @@ public class GameRenderer {
         // This is good for performance when drawing images that do not require
         // transparency.
         batcher.disableBlending();
-        batcher.draw(AssetLoader.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        renderBackground(batcher);
+        //batcher.draw(AssetLoader.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // The bird needs transparency, so we enable that again.
         batcher.enableBlending();
@@ -73,6 +75,18 @@ public class GameRenderer {
         // End SpriteBatch
         batcher.end();
 
+    }
+
+    private void renderBackground(SpriteBatch batcher) {
+        Background[] bg = myWorld.getBg();
+        for(int i =0; i < bg.length; i++) {
+            if (i == 0) {
+                batcher.draw(AssetLoader.bgIzq, bg[i].getX(), bg[i].getY(), bg[i].getWidth(), bg[i].getHeight());
+            } else {
+                batcher.draw(AssetLoader.bgDer, bg[i].getX(), bg[i].getY(), bg[i].getWidth(), bg[i].getHeight());
+            }
+
+        }
     }
 
     private void renderMisiles(SpriteBatch batcher) {

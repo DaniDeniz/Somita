@@ -1,6 +1,7 @@
 package com.mygdx.game.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Background;
 import com.mygdx.game.CollisionManager.CollisionManager;
 import com.mygdx.game.GameState.GameState;
 import com.mygdx.game.Model.Helicopter;
@@ -18,6 +19,7 @@ public class GameWorld {
     private Helicopter helicopter;
     private Misil[] misiles;
     private Vendaje[] vendajes;
+    private Background[] bg;
 
     private Score score;
     private MisilUpdater misilUpdater;
@@ -37,12 +39,26 @@ public class GameWorld {
         this.helicopter = new Helicopter(33,ALTO/2,(int) ((450/ AssetHelper.getDensity())*proporcion), (int) ((213/ AssetHelper.getDensity())*proporcion));
         createMisiles(4);
         createVendajes(1);
+        createBackground(2);
         score=new Score(this);
         explodeDelta=0;
         previousDelta=0;
         misilUpdater = new MisilUpdater(misiles,score);
         currentState = GameState.READY;
         collisionManager = new CollisionManager(this);
+    }
+
+    private void createBackground(int n) {
+        int mWitdh= ANCHO;
+        int mHeight =ALTO;
+        bg = new Background[n];
+
+        for(int i = 0; i < bg.length;i++){
+            bg[i]= new Background(ANCHO*i,0,mWitdh ,mHeight);
+        }
+        bg[0].asociateBg(bg[1]);
+        bg[1].asociateBg(bg[0]);
+
     }
 
     public void update(float delta) {
@@ -73,6 +89,14 @@ public class GameWorld {
 
 
     private void updateReady(float delta){
+        updateBackground(delta);
+
+    }
+
+    private void updateBackground(float delta) {
+        for(int i = 0; i < bg.length; i++){
+            bg[i].update(delta);
+        }
 
     }
 
@@ -110,6 +134,10 @@ public class GameWorld {
         }
     }
 
+    public Background[] getBg() {
+        return bg;
+    }
+
     private void updateRunning(float delta){
         helicopter.update(delta);
         misilUpdate(delta);
@@ -117,6 +145,7 @@ public class GameWorld {
         collision();
         score.update(delta);
         misilUpdater.update();
+        updateBackground(delta);
     }
 
     private void vendajeUpdate(float delta) {
@@ -177,7 +206,7 @@ public class GameWorld {
         score.onRestart();
         onRestartVendajes();
         onRestartDeltaAnimation();
-
+        onRestartBackground();
     }
 
     private void onRestartMisils(){
@@ -189,6 +218,12 @@ public class GameWorld {
     private void onRestartVendajes(){
         for(int i = 0; i < vendajes.length;i++){
             vendajes[i].onRestart(ANCHO+ANCHO*((i+0.f)/vendajes.length));
+        }
+    }
+
+    private void onRestartBackground(){
+        for(int i = 0; i < bg.length;i++){
+            bg[i].onRestart(ANCHO*i);
         }
     }
 

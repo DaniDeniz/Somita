@@ -20,7 +20,7 @@ public class MisilUpdater {
         if(actualScore%25==0){
             misilsIncrement();
             if(misils[0].getMaxVelocity() < misils[0].getVelocity().x)
-                score.setIncremment(score.getIncremment()+2);
+                score.setIncremment(score.getIncremment()+1);
         }
 
     }
