@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Background;
 import com.mygdx.game.CollisionManager.CollisionManager;
 import com.mygdx.game.GameState.GameState;
+import com.mygdx.game.GameWorld.GameWorldHelper.GameWorldUpdater;
+import com.mygdx.game.GameWorld.GameWorldHelper.GameWorldRestarter;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
 import com.mygdx.game.Model.Vendaje;
@@ -34,6 +36,9 @@ public class GameWorld {
     private CollisionManager collisionManager;
     private float explodeDelta, previousDelta;
 
+    private GameWorldRestarter restarter;
+    private GameWorldUpdater updater;
+
 
     public GameWorld(int midPointY) {
         this.helicopter = new Helicopter(33,ALTO/2,(int) ((450/ AssetHelper.getDensity())*proporcion), (int) ((213/ AssetHelper.getDensity())*proporcion));
@@ -46,6 +51,9 @@ public class GameWorld {
         misilUpdater = new MisilUpdater(misiles,score);
         currentState = GameState.READY;
         collisionManager = new CollisionManager(this);
+        restarter = new GameWorldRestarter(this);
+        updater = new GameWorldUpdater(this);
+
     }
 
     private void createBackground(int n) {
@@ -62,13 +70,7 @@ public class GameWorld {
     }
 
     public void update(float delta) {
-        switch (currentState){
-            case READY: updateReady(delta);
-                break;
-            case RUNNING: updateRunning(delta);
-                break;
-            case GAMEOVER: updateGameOver(delta);
-        }
+        updater.update(delta,currentState);
     }
 
 
@@ -84,26 +86,6 @@ public class GameWorld {
         for(int i = 0; i < vendajes.length;i++){
             vendajes[i]= new Vendaje(ANCHO+ANCHO*((i+0.f)/numVendajes),ALTO/((float)(Math.random()*(10-1))+1),mWitdh ,mHeight);
         }
-    }
-
-
-
-    private void updateReady(float delta){
-        updateBackground(delta);
-
-    }
-
-    private void updateBackground(float delta) {
-        for(int i = 0; i < bg.length; i++){
-            bg[i].update(delta);
-        }
-
-    }
-
-    private void updateGameOver(float delta){
-        updateGameOverMisils(delta);
-        updateGameOverVendaje(delta);
-
     }
 
     public float getExplodeDelta() {
@@ -122,36 +104,12 @@ public class GameWorld {
         this.previousDelta = previousDelta;
     }
 
-    private void updateGameOverVendaje(float delta) {
-        for(int i = 0; i < vendajes.length; i++){
-            vendajes[i].updateGameOver(delta);
-        }
-    }
-
-    private void updateGameOverMisils(float delta) {
-        for(int i = 0; i < misiles.length; i++){
-            misiles[i].updateGameOver(delta);
-        }
-    }
-
     public Background[] getBg() {
         return bg;
     }
 
-    private void updateRunning(float delta){
-        helicopter.update(delta);
-        misilUpdate(delta);
-        vendajeUpdate(delta);
-        collision();
-        score.update(delta);
-        misilUpdater.update();
-        updateBackground(delta);
-    }
-
-    private void vendajeUpdate(float delta) {
-        for(int i = 0; i < vendajes.length; i++){
-            vendajes[i].update(delta);
-        }
+    public MisilUpdater getMisilUpdater() {
+        return misilUpdater;
     }
 
     public void setState(GameState gs){
@@ -170,10 +128,10 @@ public class GameWorld {
         return misiles;
     }
 
-    private void misilUpdate(float delta){
-        for(int i = 0; i < misiles.length; i++){
-            misiles[i].update(delta);
-        }
+
+
+    public CollisionManager getCollisionManager() {
+        return collisionManager;
     }
 
     private void createMisiles(int numMisiles){
@@ -182,53 +140,19 @@ public class GameWorld {
         misiles = new Misil[numMisiles];
 
         for(int i = 0; i < misiles.length;i++){
+
             misiles[i]= new Misil(ANCHO+ANCHO*((i+0.f)/numMisiles),ALTO/((float)(Math.random()*(10-1))+1),mWitdh ,mHeight);
         }
 
     }
-
-    private void collision(){
-        collisionManager.isCollisionMisil();
-        if(collisionManager.isCollisionVendaje()) {
-            score.vendajeCollided();
-        }
-
-    }
-
 
     public Score getScore(){
         return score;
     }
 
     public void onRestart(){
-        helicopter.onRestart();
-        onRestartMisils();
-        score.onRestart();
-        onRestartVendajes();
-        onRestartDeltaAnimation();
-        onRestartBackground();
+        restarter.onRestart();
     }
 
-    private void onRestartMisils(){
-        for(int i = 0; i < misiles.length;i++){
-            misiles[i].onRestart(ANCHO+ANCHO*((i+0.f)/misiles.length));
-        }
-    }
 
-    private void onRestartVendajes(){
-        for(int i = 0; i < vendajes.length;i++){
-            vendajes[i].onRestart(ANCHO+ANCHO*((i+0.f)/vendajes.length));
-        }
-    }
-
-    private void onRestartBackground(){
-        for(int i = 0; i < bg.length;i++){
-            bg[i].onRestart(ANCHO*i);
-        }
-    }
-
-    private void onRestartDeltaAnimation(){
-        explodeDelta=0;
-        previousDelta=0;
-    }
 }

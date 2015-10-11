@@ -1,7 +1,6 @@
 package com.mygdx.game.Model;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.math.Vector2;
 
@@ -22,7 +21,7 @@ public class Misil {
         this.width=width;
         this.height=height;
         position = new Vector2(x,y);
-        velocity = new Vector2(-500,0);
+        velocity = new Vector2(-450,0);
         bounds= new Rectangle(x,y,width,height);
         maxVelocity=-1000;
 
@@ -88,7 +87,7 @@ public class Misil {
     public void onRestart(float x){
         position.x = x;
         position.y = ((float)(Math.random()*(max)))-10;
-        velocity.x = -500;
+        velocity.x = -450;
         velocity.y = 0;
     }
 }
