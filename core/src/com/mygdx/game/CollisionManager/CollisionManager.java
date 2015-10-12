@@ -28,6 +28,7 @@ public class CollisionManager {
         for (int i = 0; i < misils.length; i++) {
             if(helicopter.getBounds().overlaps(misils[i].getBounds())) {
                 myWorld.setState(GameState.GAMEOVER);
+                HighScoreManager.highScore((int) myWorld.getScore().getValue());
                 return true;
             }
         }

@@ -119,8 +119,15 @@ public class GameRenderer {
 
     private void renderScore(SpriteBatch batcher){
         int score = (int) myWorld.getScore().getValue();
-        String puntuacion = "Puntuación: "+score;
-        font.draw(batcher,puntuacion,ANCHO/2-3*puntuacion.length(),ALTO-50);
+        String puntuacion = "Score: "+score;
+        AssetLoader.shadow.draw(batcher, puntuacion, ANCHO / 2 - puntuacion.length()*font.getScaleX()+1, ALTO - 50-1);
+        AssetLoader.font.draw(batcher, puntuacion, ANCHO / 2 - puntuacion.length()*font.getScaleX(), ALTO - 50);
+        if(GameState.GAMEOVER == myWorld.getCurrentState()){
+            String highScore = "HighScore: "+AssetLoader.pref.getInteger("HighScore");
+            AssetLoader.shadow.draw(batcher, highScore, ANCHO / 2 - 3*highScore.length()*font.getScaleX()+1, ALTO/2);
+            AssetLoader.font.draw(batcher, highScore, ANCHO / 2 -3* highScore.length()*font.getScaleX(), ALTO /2);
+        }
+
     }
 
     private void renderVendaje(SpriteBatch batcher){

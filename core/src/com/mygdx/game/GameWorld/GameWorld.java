@@ -12,6 +12,7 @@ import com.mygdx.game.Model.Vendaje;
 import com.mygdx.game.Score.MisilUpdater;
 import com.mygdx.game.Score.Score;
 import com.mygdx.game.assets.AssetHelper;
+import com.mygdx.game.assets.AudioPlayer;
 
 /**
  * Created by USER on 28/09/2015.
@@ -34,10 +35,12 @@ public class GameWorld {
     private GameState currentState;
 
     private CollisionManager collisionManager;
+    private AudioPlayer audioPlayer;
     private float explodeDelta, previousDelta;
 
     private GameWorldRestarter restarter;
     private GameWorldUpdater updater;
+
 
 
     public GameWorld(int midPointY) {
@@ -53,6 +56,7 @@ public class GameWorld {
         collisionManager = new CollisionManager(this);
         restarter = new GameWorldRestarter(this);
         updater = new GameWorldUpdater(this);
+        audioPlayer = new AudioPlayer(score);
 
     }
 
@@ -70,7 +74,7 @@ public class GameWorld {
     }
 
     public void update(float delta) {
-        updater.update(delta,currentState);
+        updater.update(delta, currentState);
     }
 
 
@@ -152,6 +156,10 @@ public class GameWorld {
 
     public void onRestart(){
         restarter.onRestart();
+    }
+
+    public AudioPlayer getAudioPlayer() {
+        return audioPlayer;
     }
 
 

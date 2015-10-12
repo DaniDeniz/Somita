@@ -8,6 +8,8 @@ import com.mygdx.game.Model.Misil;
 import com.mygdx.game.Model.Vendaje;
 import com.mygdx.game.Score.MisilUpdater;
 import com.mygdx.game.Score.Score;
+import com.mygdx.game.assets.AssetLoader;
+import com.mygdx.game.assets.AudioPlayer;
 
 /**
  * Created by Dani on 11/10/2015.
@@ -56,6 +58,7 @@ public class GameWorldUpdater {
         score.update(delta);
         misilUpdater.update();
         updateBackground(delta);
+        myWorld.getAudioPlayer().play();
     }
 
     private void vendajeUpdate(float delta) {
@@ -83,7 +86,17 @@ public class GameWorldUpdater {
     private void updateGameOver(float delta){
         updateGameOverMisils(delta);
         updateGameOverVendaje(delta);
+        updateGameOverHighScore();
 
+    }
+
+    private void updateGameOverHighScore() {
+        int highScore = AssetLoader.pref.getInteger("HighScore");
+        if (highScore <= (int)(myWorld.getScore().getValue())){
+            myWorld.getAudioPlayer().playSoma();
+        } else {
+            myWorld.getAudioPlayer().playEzequie();
+        }
     }
 
     private void updateGameOverVendaje(float delta) {

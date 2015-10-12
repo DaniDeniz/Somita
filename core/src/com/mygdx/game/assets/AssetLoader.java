@@ -1,10 +1,14 @@
 package com.mygdx.game.assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 
 
 
@@ -16,6 +20,11 @@ public class AssetLoader {
     public static Texture helicopter,misil,vendaje;
     public static TextureRegion helicopterStopped;
     public static Animation helicopterMove,helicopterExplosion;
+    public static Sound rambo,unoHelicoptero,soma,ezequie,milCosa;
+
+    public static BitmapFont font,shadow;
+
+    public static Preferences pref;
 
 
 
@@ -39,8 +48,35 @@ public class AssetLoader {
         TextureRegion[] helicopterExploding = regionsE[0];
         helicopterExplosion = new Animation(0.1f,helicopterExploding);
 
+        rambo = Gdx.audio.newSound(Gdx.files.internal("rambo.mp3"));
+        soma = Gdx.audio.newSound(Gdx.files.internal("pasosoma.mp3"));
+        unoHelicoptero = Gdx.audio.newSound(Gdx.files.internal("trinchera.wav"));
+        ezequie = Gdx.audio.newSound(Gdx.files.internal("pasoezequie.mp3"));
+        milCosa = Gdx.audio.newSound(Gdx.files.internal("milcosa.wav"));
+
+        pref= Gdx.app.getPreferences("Soma");
+
+        if(!pref.contains("HighScore")){
+            pref.putInteger("HighScore",0);
+            pref.flush();
+        }
+
+        font = new BitmapFont(Gdx.files.internal("text.fnt"),Gdx.files.internal("text.png"),false);
+
+        shadow = new BitmapFont(Gdx.files.internal("shadow.fnt"),Gdx.files.internal("shadow.png"),false);
+
+
+
+
+
 
     }
+
+    public float getFontX( BitmapFont font , CharSequence str )    {
+        float ancho_str = font.getScaleX()*str.length();
+        float fontX = Gdx.graphics.getWidth()/2 - ancho_str/2;
+        return fontX;
+        }
 
     public static void dispose(){
         vendaje.dispose();
@@ -49,5 +85,10 @@ public class AssetLoader {
         bgIzq.dispose();
         bgDer.dispose();
         explosion.dispose();
+        rambo.dispose();
+        unoHelicoptero.dispose();
+        soma.dispose();
+        ezequie.dispose();
+        milCosa.dispose();
     }
 }

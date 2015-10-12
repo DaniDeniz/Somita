@@ -1,6 +1,7 @@
 package com.mygdx.game.Score;
 
 import com.mygdx.game.Model.Misil;
+import com.mygdx.game.assets.AssetLoader;
 
 /**
  * Created by Dani on 06/10/2015.

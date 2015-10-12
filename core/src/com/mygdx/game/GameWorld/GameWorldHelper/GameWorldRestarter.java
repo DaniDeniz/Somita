@@ -34,6 +34,7 @@ public class GameWorldRestarter {
         onRestartVendajes();
         onRestartDeltaAnimation();
         onRestartBackground();
+        myWorld.getAudioPlayer().onRestart();
     }
 
     private void onRestartMisils(){
