@@ -3,6 +3,7 @@ package com.mygdx.game.Model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.assets.AssetHelper;
 
 /**
  * Created by USER on 29/09/2015.
@@ -14,16 +15,16 @@ public class Misil {
 
     private int width,height;
     private Rectangle bounds;
-    private int maxVelocity;
+    private int maxVelocity = - (AssetHelper.getWidthPixels()*900/1196);
+    private float inicialVelocity = - (AssetHelper.getWidthPixels()*600/1196);
 
 
     public Misil(float x, float y, int width, int height) {
         this.width=width;
         this.height=height;
         position = new Vector2(x,y);
-        velocity = new Vector2(-450,0);
+        velocity = new Vector2(inicialVelocity,0);
         bounds= new Rectangle(x,y,width,height);
-        maxVelocity=-1000;
 
     }
 
@@ -87,7 +88,7 @@ public class Misil {
     public void onRestart(float x){
         position.x = x;
         position.y = ((float)(Math.random()*(max)))-10;
-        velocity.x = -450;
+        velocity.x = inicialVelocity;
         velocity.y = 0;
     }
 }

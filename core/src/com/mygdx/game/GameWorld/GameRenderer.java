@@ -12,6 +12,7 @@ import com.mygdx.game.GameState.GameState;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
 import com.mygdx.game.Model.Vendaje;
+import com.mygdx.game.assets.AssetHelper;
 import com.mygdx.game.assets.AssetLoader;
 
 /**
@@ -72,6 +73,7 @@ public class GameRenderer {
 
 
         renderScore(batcher);
+
         // End SpriteBatch
         batcher.end();
 

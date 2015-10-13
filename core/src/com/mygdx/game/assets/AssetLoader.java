@@ -66,10 +66,6 @@ public class AssetLoader {
         shadow = new BitmapFont(Gdx.files.internal("shadow.fnt"),Gdx.files.internal("shadow.png"),false);
 
 
-
-
-
-
     }
 
     public float getFontX( BitmapFont font , CharSequence str )    {

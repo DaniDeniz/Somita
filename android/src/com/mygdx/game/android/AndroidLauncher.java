@@ -15,8 +15,10 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        float density= getResources().getDisplayMetrics().density;
-        new AssetHelper(density);
+        int heightPixels= getResources().getDisplayMetrics().heightPixels;
+		int widthPixels= getResources().getDisplayMetrics().widthPixels;
+		float density= getResources().getDisplayMetrics().density;
+        new AssetHelper(widthPixels,heightPixels,density);
 		initialize(new Somita(), config);
 	}
 }

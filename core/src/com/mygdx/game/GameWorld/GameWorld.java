@@ -44,7 +44,8 @@ public class GameWorld {
 
 
     public GameWorld(int midPointY) {
-        this.helicopter = new Helicopter(33,ALTO/2,(int) ((450/ AssetHelper.getDensity())*proporcion), (int) ((213/ AssetHelper.getDensity())*proporcion));
+        createHelicopter();
+
         createMisiles(4);
         createVendajes(1);
         createBackground(2);
@@ -58,6 +59,16 @@ public class GameWorld {
         updater = new GameWorldUpdater(this);
         audioPlayer = new AudioPlayer(score);
 
+    }
+
+    private void createHelicopter() {
+        int width = (int) (((AssetHelper.getWidthPixels()*225)/1196)*proporcion);
+        int height = (int) (((AssetHelper.getHeightPixels()*106)/720)*proporcion);
+        this.helicopter = new Helicopter(33,ALTO/2,width,height);
+        //pantalla: 1196*720
+        //helicoptero: 225x106
+        //misil: 157x40
+        //vendaje: 82x56
     }
 
     private void createBackground(int n) {
@@ -83,8 +94,8 @@ public class GameWorld {
     }
 
     private void createVendajes(int numVendajes) {
-        int mWitdh=(int) ((164/ AssetHelper.getDensity())*proporcion);
-        int mHeight =(int) ((112/AssetHelper.getDensity())*proporcion);
+        int mWitdh= (int) ((AssetHelper.getWidthPixels()*82/1196)*proporcion);
+        int mHeight = (int) ((AssetHelper.getHeightPixels()*56/720)*proporcion);
         vendajes = new Vendaje[numVendajes];
 
         for(int i = 0; i < vendajes.length;i++){
@@ -139,8 +150,8 @@ public class GameWorld {
     }
 
     private void createMisiles(int numMisiles){
-        int mWitdh=(int) ((314/ AssetHelper.getDensity())*proporcion);
-        int mHeight =(int) ((80/AssetHelper.getDensity())*proporcion);
+        int mWitdh= (int) ((AssetHelper.getWidthPixels()*157/1196)*proporcion);
+        int mHeight = (int) ((AssetHelper.getHeightPixels()*40/720)*proporcion);
         misiles = new Misil[numMisiles];
 
         for(int i = 0; i < misiles.length;i++){

@@ -54,8 +54,8 @@ public class GameWorldUpdater {
         helicopter.update(delta);
         misilUpdate(delta);
         vendajeUpdate(delta);
-        collision();
         score.update(delta);
+        collision();
         misilUpdater.update();
         updateBackground(delta);
         myWorld.getAudioPlayer().play();
