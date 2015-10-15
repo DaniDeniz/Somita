@@ -11,6 +11,7 @@ import com.mygdx.game.Background;
 import com.mygdx.game.GameState.GameState;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
+import com.mygdx.game.Model.MisilInvertor;
 import com.mygdx.game.Model.Vendaje;
 import com.mygdx.game.assets.AssetHelper;
 import com.mygdx.game.assets.AssetLoader;
@@ -69,14 +70,45 @@ public class GameRenderer {
         // Pass in the runTime variable to get the current frame.
         renderVendaje(batcher);
         renderMisiles(batcher);
+        renderMisilesInvertor(batcher);
         renderHelicopter(batcher, runTime);
 
+        renderInversorNotification(batcher);
+        renderReadyMensaje(batcher);
 
         renderScore(batcher);
 
         // End SpriteBatch
         batcher.end();
 
+    }
+
+    private void renderReadyMensaje(SpriteBatch batcher) {
+        if(GameState.READY == myWorld.getCurrentState()){
+            AssetLoader.font.getData().setScale(.7f,.7f);
+            AssetLoader.shadow.getData().setScale(.7f,.7f);
+            AssetLoader.shadow.draw(batcher, "Pulsa para intentar salvar a Rambo", ANCHO * 50 / 1196, ALTO/2 -ALTO* 50 / 720 - 1);
+            AssetLoader.font.draw(batcher, "Pulsa para intentar salvar a Rambo", ANCHO * 50 / 1196, ALTO/2 -ALTO* 50 / 720 - 1);
+            AssetLoader.font.getData().setScale(.4f, .4f);
+            AssetLoader.shadow.getData().setScale(.4f, .4f);
+
+        }
+    }
+
+    private void renderInversorNotification(SpriteBatch batcher) {
+        Helicopter helicopter = myWorld.getHelicopter();
+        if(helicopter.getAcceleration()>0){
+            AssetLoader.shadow.draw(batcher, "Control invertido", ANCHO * 25 / 1196, ALTO * 50 / 720 - 1);
+            AssetLoader.font.draw(batcher, "Control invertido", ANCHO * 25 / 1196, ALTO * 50 / 720 - 1);
+        }
+
+    }
+
+    private void renderMisilesInvertor(SpriteBatch batcher) {
+        MisilInvertor[] invertors = myWorld.getInvertors();
+        for(int i =0; i < invertors.length; i++){
+            batcher.draw(AssetLoader.misilInvertor, invertors[i].getX(), invertors[i].getY(),invertors[i].getWidth(),invertors[i].getHeight());
+        }
     }
 
     private void renderBackground(SpriteBatch batcher) {
@@ -120,14 +152,18 @@ public class GameRenderer {
     }
 
     private void renderScore(SpriteBatch batcher){
-        int score = (int) myWorld.getScore().getValue();
+        int score = myWorld.getScore().getValue();
         String puntuacion = "Score: "+score;
-        AssetLoader.shadow.draw(batcher, puntuacion, ANCHO / 2 - puntuacion.length()*font.getScaleX()+1, ALTO - 50-1);
-        AssetLoader.font.draw(batcher, puntuacion, ANCHO / 2 - puntuacion.length()*font.getScaleX(), ALTO - 50);
+        AssetLoader.shadow.draw(batcher, puntuacion, ANCHO*25/1196, ALTO - ALTO*25/720-1);
+        AssetLoader.font.draw(batcher, puntuacion,ANCHO*25/1196, ALTO - ALTO*25/720-1);
         if(GameState.GAMEOVER == myWorld.getCurrentState()){
             String highScore = "HighScore: "+AssetLoader.pref.getInteger("HighScore");
-            AssetLoader.shadow.draw(batcher, highScore, ANCHO / 2 - 3*highScore.length()*font.getScaleX()+1, ALTO/2);
-            AssetLoader.font.draw(batcher, highScore, ANCHO / 2 -3* highScore.length()*font.getScaleX(), ALTO /2);
+            AssetLoader.font.getData().setScale(1,1);
+            AssetLoader.shadow.getData().setScale(1,1);
+            AssetLoader.shadow.draw(batcher, highScore, ANCHO * 25 / 1196 + 1, ALTO / 2);
+            AssetLoader.font.draw(batcher, highScore, ANCHO * 25 / 1196, ALTO / 2);
+            AssetLoader.font.getData().setScale(.4f, .4f);
+            AssetLoader.shadow.getData().setScale(.4f, .4f);
         }
 
     }

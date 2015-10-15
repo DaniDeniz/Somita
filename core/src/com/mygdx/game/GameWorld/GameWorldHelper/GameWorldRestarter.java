@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameWorld.GameWorld;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
+import com.mygdx.game.Model.MisilInvertor;
 import com.mygdx.game.Model.Vendaje;
 
 /**
@@ -16,6 +17,7 @@ public class GameWorldRestarter {
     private Helicopter helicopter;
     private Misil[] misils;
     private Vendaje[] vendajes;
+    private MisilInvertor[] invertors;
 
     private int ANCHO = Gdx.graphics.getWidth();
 
@@ -24,12 +26,14 @@ public class GameWorldRestarter {
         this.helicopter = myWorld.getHelicopter();
         this.misils = myWorld.getMisiles();
         this.vendajes = myWorld.getVendajes();
+        invertors = myWorld.getInvertors();
 
     }
 
     public void onRestart(){
         helicopter.onRestart();
         onRestartMisils();
+        onRestartInvertors();
         myWorld.getScore().onRestart();
         onRestartVendajes();
         onRestartDeltaAnimation();
@@ -40,6 +44,12 @@ public class GameWorldRestarter {
     private void onRestartMisils(){
         for(int i = 0; i < misils.length;i++){
             misils[i].onRestart(ANCHO+ANCHO*((i+0.f)/misils.length));
+        }
+    }
+
+    private void onRestartInvertors(){
+        for(int i = 0; i < invertors.length;i++){
+            invertors[i].onRestart(ANCHO+ANCHO*((i+0.f)/invertors.length));
         }
     }
 

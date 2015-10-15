@@ -11,7 +11,7 @@ public class MisilUpdater {
 
     private Misil[] misils;
     private Score score;
-    private float acceleration = AssetHelper.getWidthPixels()*50/1196;
+    private float acceleration = AssetHelper.getWidthPixels()*100/1196;
     private boolean isIncrementing;
 
     public MisilUpdater(Misil[] misils,Score score) {
@@ -25,7 +25,7 @@ public class MisilUpdater {
         if(!isIncrementing && actualScore%25==0 && actualScore!=0){
             if(misils[0].getMaxVelocity() < misils[0].getVelocity().x){
                 misilsIncrement();
-                score.setIncremment(score.getIncremment()+1);
+                score.setIncremment(score.getIncremment()+2);
                 isIncrementing=true;
             }
         }

@@ -9,7 +9,7 @@ public class Score {
 
     private double scorePoints;
     private double scoreTime;
-    private int incremment=2;
+    private int incremment=10;
 
     public Score(GameWorld myWorld) {
         scorePoints=0;

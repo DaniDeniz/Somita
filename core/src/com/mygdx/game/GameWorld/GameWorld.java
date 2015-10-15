@@ -8,6 +8,7 @@ import com.mygdx.game.GameWorld.GameWorldHelper.GameWorldUpdater;
 import com.mygdx.game.GameWorld.GameWorldHelper.GameWorldRestarter;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
+import com.mygdx.game.Model.MisilInvertor;
 import com.mygdx.game.Model.Vendaje;
 import com.mygdx.game.Score.MisilUpdater;
 import com.mygdx.game.Score.Score;
@@ -22,6 +23,7 @@ public class GameWorld {
     private Helicopter helicopter;
     private Misil[] misiles;
     private Vendaje[] vendajes;
+    private MisilInvertor[] invertors;
     private Background[] bg;
 
     private Score score;
@@ -45,8 +47,8 @@ public class GameWorld {
 
     public GameWorld(int midPointY) {
         createHelicopter();
-
         createMisiles(4);
+        createMisilesInvertor(1);
         createVendajes(1);
         createBackground(2);
         score=new Score(this);
@@ -149,14 +151,31 @@ public class GameWorld {
         return collisionManager;
     }
 
+    public MisilInvertor[] getInvertors() {
+        return invertors;
+    }
+
     private void createMisiles(int numMisiles){
         int mWitdh= (int) ((AssetHelper.getWidthPixels()*157/1196)*proporcion);
         int mHeight = (int) ((AssetHelper.getHeightPixels()*40/720)*proporcion);
+
         misiles = new Misil[numMisiles];
 
         for(int i = 0; i < misiles.length;i++){
 
             misiles[i]= new Misil(ANCHO+ANCHO*((i+0.f)/numMisiles),ALTO/((float)(Math.random()*(10-1))+1),mWitdh ,mHeight);
+        }
+
+    }
+
+    private void createMisilesInvertor(int numMisiles){
+        int mWitdh= (int) ((AssetHelper.getWidthPixels()*157/1196)*proporcion);
+        int mHeight = (int) ((AssetHelper.getHeightPixels()*40/720)*proporcion);
+        invertors = new MisilInvertor[numMisiles];
+
+        for(int i = 0; i < invertors.length;i++){
+
+            invertors[i]= new MisilInvertor(ANCHO+ANCHO*((i+0.f)/numMisiles),ALTO/((float)(Math.random()*(10-1))+1),mWitdh ,mHeight);
         }
 
     }

@@ -5,6 +5,7 @@ import com.mygdx.game.GameState.GameState;
 import com.mygdx.game.GameWorld.GameWorld;
 import com.mygdx.game.Model.Helicopter;
 import com.mygdx.game.Model.Misil;
+import com.mygdx.game.Model.MisilInvertor;
 import com.mygdx.game.Model.Vendaje;
 import com.mygdx.game.Score.MisilUpdater;
 import com.mygdx.game.Score.Score;
@@ -20,6 +21,7 @@ public class GameWorldUpdater {
     private Helicopter helicopter;
     private Misil[] misils;
     private Vendaje[] vendajes;
+    private MisilInvertor[] invertors;
 
     private Score score;
 
@@ -32,6 +34,7 @@ public class GameWorldUpdater {
         helicopter = myWorld.getHelicopter();
         misils = myWorld.getMisiles();
         vendajes = myWorld.getVendajes();
+        invertors = myWorld.getInvertors();
 
         score = myWorld.getScore();
 
@@ -53,6 +56,7 @@ public class GameWorldUpdater {
     private void updateRunning(float delta){
         helicopter.update(delta);
         misilUpdate(delta);
+        misilInversorUpdate(delta);
         vendajeUpdate(delta);
         score.update(delta);
         collision();
@@ -73,6 +77,12 @@ public class GameWorldUpdater {
         }
     }
 
+    private void misilInversorUpdate(float delta){
+        for(int i = 0; i < invertors.length; i++){
+            invertors[i].update(delta);
+        }
+    }
+
     private void updateBackground(float delta) {
         for(int i = 0; i < myWorld.getBg().length; i++){
             myWorld.getBg()[i].update(delta);
@@ -86,13 +96,14 @@ public class GameWorldUpdater {
     private void updateGameOver(float delta){
         updateGameOverMisils(delta);
         updateGameOverVendaje(delta);
+        updateGameOverMisilsInvertor(delta);
         updateGameOverHighScore();
 
     }
 
     private void updateGameOverHighScore() {
         int highScore = AssetLoader.pref.getInteger("HighScore");
-        if (highScore <= (int)(myWorld.getScore().getValue())){
+        if (highScore <= (myWorld.getScore().getValue())){
             myWorld.getAudioPlayer().playSoma();
         } else {
             myWorld.getAudioPlayer().playEzequie();
@@ -111,8 +122,16 @@ public class GameWorldUpdater {
         }
     }
 
+    private void updateGameOverMisilsInvertor(float delta) {
+        for(int i = 0; i < invertors.length; i++){
+            invertors[i].updateGameOver(delta);
+        }
+    }
+
     private void collision(){
         collisionManager.isCollisionMisil();
+        collisionManager.isCollisionMisilInvertor();
+        collisionManager.isCollisionDown();
         if(collisionManager.isCollisionVendaje()) {
             score.vendajeCollided();
         }

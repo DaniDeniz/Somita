@@ -9,14 +9,14 @@ import com.mygdx.game.assets.AssetHelper;
  * Created by USER on 29/09/2015.
  */
 public class Misil {
-    private Vector2 position;
-    private Vector2 velocity;
-    private float max= Gdx.graphics.getHeight()-getHeight()-20;
+    protected Vector2 position;
+    protected Vector2 velocity;
+    protected float max= Gdx.graphics.getHeight()-getHeight()-20;
 
-    private int width,height;
-    private Rectangle bounds;
-    private int maxVelocity = - (AssetHelper.getWidthPixels()*900/1196);
-    private float inicialVelocity = - (AssetHelper.getWidthPixels()*600/1196);
+    protected int width,height;
+    protected Rectangle bounds;
+    protected int maxVelocity = - (AssetHelper.getWidthPixels()*900/1196);
+    protected float inicialVelocity = - (AssetHelper.getWidthPixels()*600/1196);
 
 
     public Misil(float x, float y, int width, int height) {
@@ -74,6 +74,10 @@ public class Misil {
         return velocity;
     }
 
+    public void setVelocity(float x){
+        velocity.x=x;
+    }
+
     public int getMaxVelocity() {
 
         return maxVelocity;
@@ -83,6 +87,11 @@ public class Misil {
         if(velocity.x > maxVelocity){
             velocity.add(-x,y);
         }
+    }
+
+    public void hasCollided(){
+        position.x= Gdx.graphics.getWidth();
+        position.y = ((float)(Math.random()*(max)))-10;
     }
 
     public void onRestart(float x){

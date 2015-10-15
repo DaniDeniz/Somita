@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class AssetLoader {
     public static Texture explosion,bgIzq,bgDer;
-    public static Texture helicopter,misil,vendaje;
+    public static Texture helicopter,misil,vendaje,misilInvertor;
     public static TextureRegion helicopterStopped;
     public static Animation helicopterMove,helicopterExplosion;
     public static Sound rambo,unoHelicoptero,soma,ezequie,milCosa;
@@ -34,6 +34,7 @@ public class AssetLoader {
         misil = new Texture("misilNuclear.png");
         explosion= new Texture("explosion.png");
         vendaje= new Texture("vendaje.png");
+        misilInvertor = new Texture("misilInversor.png");
 
         helicopterStopped = new TextureRegion(helicopter,450,213);
 
@@ -42,7 +43,7 @@ public class AssetLoader {
 
         TextureRegion[][] regions = TextureRegion.split(helicopter, 450, 213);
         TextureRegion[] helicopterMoving = regions[0];
-        helicopterMove = new Animation(0.1f,helicopterMoving);
+        helicopterMove = new Animation(0.07f,helicopterMoving);
 
         TextureRegion[][] regionsE = TextureRegion.split(explosion, 190, 150);
         TextureRegion[] helicopterExploding = regionsE[0];
@@ -62,8 +63,10 @@ public class AssetLoader {
         }
 
         font = new BitmapFont(Gdx.files.internal("text.fnt"),Gdx.files.internal("text.png"),false);
+        font.getData().setScale(.4f,.4f);
 
         shadow = new BitmapFont(Gdx.files.internal("shadow.fnt"),Gdx.files.internal("shadow.png"),false);
+        shadow.getData().setScale(.4f,.4f);
 
 
     }
