@@ -28,9 +28,9 @@ public class CollisionManager {
         invertors = myWorld.getInvertors();
     }
 
-    public boolean isCollisionMisil(){
+    public boolean isCollisionMisil() {
         for (int i = 0; i < misils.length; i++) {
-            if(helicopter.getBounds().overlaps(misils[i].getBounds())) {
+            if (helicopter.getBounds().overlaps(misils[i].getBounds())) {
                 myWorld.setState(GameState.GAMEOVER);
                 HighScoreManager.highScore((int) myWorld.getScore().getValue());
                 return true;
@@ -39,12 +39,13 @@ public class CollisionManager {
         return false;
     }
 
-    public boolean isCollisionMisilInvertor(){
+    public boolean isCollisionMisilInvertor() {
 
         for (int i = 0; i < invertors.length; i++) {
-            if(helicopter.getBounds().overlaps(invertors[i].getBounds())) {
-                helicopter.setAcceleration(helicopter.getAcceleration()*-1);
+            if (helicopter.getBounds().overlaps(invertors[i].getBounds())) {
+                helicopter.setAcceleration(helicopter.getAcceleration() * -1);
                 helicopter.setIncrem(helicopter.getIncrem() * -1);
+                helicopter.setHasBeenInverted(true);
                 invertors[i].hasCollided();
                 return true;
             }
@@ -53,17 +54,17 @@ public class CollisionManager {
         return false;
     }
 
-    public boolean isCollisionDown(){
-        if(helicopter.getY()<0){
+    public boolean isCollisionDown() {
+        if (helicopter.getY() < 0) {
             myWorld.setState(GameState.GAMEOVER);
             return true;
         }
         return false;
     }
 
-    public boolean isCollisionVendaje(){
+    public boolean isCollisionVendaje() {
         for (int i = 0; i < vendajes.length; i++) {
-            if(helicopter.getBounds().overlaps(vendajes[i].getBounds())) {
+            if (helicopter.getBounds().overlaps(vendajes[i].getBounds())) {
                 vendajes[i].hasCollided();
                 return true;
             }
@@ -71,7 +72,6 @@ public class CollisionManager {
         return false;
 
     }
-
 
 
 }

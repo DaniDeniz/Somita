@@ -9,19 +9,19 @@ public class Score {
 
     private double scorePoints;
     private double scoreTime;
-    private int incremment=10;
+    private int incremment = 5;
 
     public Score(GameWorld myWorld) {
-        scorePoints=0;
-        scoreTime=0;
+        scorePoints = 0;
+        scoreTime = 0;
     }
 
-    public void update(float delta){
-        scoreTime+=incremment*delta;
+    public void update(float delta) {
+        scoreTime += incremment * delta;
     }
 
-    public int getValue(){
-        return (int) (scoreTime+scorePoints);
+    public int getValue() {
+        return (int) (scoreTime + scorePoints);
     }
 
     public int getIncremment() {
@@ -32,17 +32,17 @@ public class Score {
         this.incremment = incremment;
     }
 
-    public double getScoreTime(){
+    public double getScoreTime() {
         return scoreTime;
     }
 
-    public void vendajeCollided(){
-        scorePoints+=15;
+    public void vendajeCollided() {
+        scorePoints += 15;
     }
 
-    public void onRestart(){
-        scorePoints=0;
-        scoreTime=0;
-        incremment=1;
+    public void onRestart() {
+        scorePoints = 0;
+        scoreTime = 0;
+        incremment = 5;
     }
 }

@@ -10,43 +10,49 @@ import com.mygdx.game.assets.AssetHelper;
 /**
  * Created by USER on 28/09/2015.
  */
-public class Helicopter implements ActorInterface{
+public class Helicopter implements ActorInterface {
 
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 acceleration;
 
-    private int width,height;
+    private int width, height;
     private Rectangle bounds;
 
-    private float ac = -AssetHelper.getHeightPixels()*460/720;
-    private float increm = AssetHelper.getHeightPixels()*320/720;
+    private float ac = -AssetHelper.getHeightPixels() * 460 / 720;
+    private float increm = AssetHelper.getHeightPixels() * 320 / 720;
+
+    private boolean hasBeenInverted;
+
+
 
 
     public Helicopter(float x, float y, int width, int height) {
-        this.width=width;
-        this.height=height;
-        position = new Vector2(x,y);
-        velocity = new Vector2(0,0);
-        acceleration = new Vector2(0,ac);
-        bounds = new Rectangle(x,y,width,height*100/213);
+        this.width = width;
+        this.height = height;
+        position = new Vector2(x, y);
+        velocity = new Vector2(0, 0);
+        acceleration = new Vector2(0, ac);
+        bounds = new Rectangle(x, y, width, height * 100 / 213);
+        hasBeenInverted=false;
 
     }
 
-    public void update(float delta){
+    public void update(float delta) {
         velocity.add(acceleration.cpy().scl(delta));
-        if(velocity.y < ac){
-            velocity.y =-AssetHelper.getHeightPixels()*300/720;;
+        if (velocity.y < ac) {
+            velocity.y = -AssetHelper.getHeightPixels() * 300 / 720;
+            ;
         }
 
         position.add(velocity.cpy().scl(delta));
 
-        if(position.y > Gdx.graphics.getHeight()-getHeight()){
-            position.y=Gdx.graphics.getHeight()-getHeight();
-            velocity.y=velocity.y*0.8f;
+        if (position.y > Gdx.graphics.getHeight() - getHeight()) {
+            position.y = Gdx.graphics.getHeight() - getHeight();
+            velocity.y = velocity.y * 0.8f;
         }
-        if(position.y <-getHeight()*0.1f){
-            position.y=-getHeight()*0.1f;
+        if (position.y < -getHeight() * 0.1f) {
+            position.y = -getHeight() * 0.1f;
         }
         bounds.setPosition(position);
 
@@ -64,7 +70,7 @@ public class Helicopter implements ActorInterface{
         return position.y;
     }
 
-    public boolean isGoingUp(){
+    public boolean isGoingUp() {
         return velocity.y > 0;
     }
 
@@ -76,7 +82,7 @@ public class Helicopter implements ActorInterface{
         return height;
     }
 
-    public float getAcceleration(){
+    public float getAcceleration() {
         return acceleration.y;
     }
 
@@ -88,26 +94,31 @@ public class Helicopter implements ActorInterface{
         this.increm = increm;
     }
 
-    public void setAcceleration(float y){
-        acceleration.y=y;
+    public void setAcceleration(float y) {
+        acceleration.y = y;
     }
 
     @Override
     public void onRestart() {
-        position.x=33;
-        position.y=Gdx.graphics.getHeight()/2;
+        position.x = 33;
+        position.y = Gdx.graphics.getHeight() / 2;
         velocity.y = 0;
-        acceleration.y=ac;
-        increm = AssetHelper.getHeightPixels()*320/720;
+        acceleration.y = ac;
+        increm = AssetHelper.getHeightPixels() * 320 / 720;
     }
 
 
-
-    public Rectangle getBounds(){
+    public Rectangle getBounds() {
         return bounds;
     }
 
+    public boolean isHasBeenInverted() {
+        return hasBeenInverted;
+    }
 
+    public void setHasBeenInverted(boolean hasBeenInverted) {
+        this.hasBeenInverted = hasBeenInverted;
+    }
 
 
 }

@@ -30,7 +30,7 @@ public class GameWorldRestarter {
 
     }
 
-    public void onRestart(){
+    public void onRestart() {
         helicopter.onRestart();
         onRestartMisils();
         onRestartInvertors();
@@ -41,31 +41,31 @@ public class GameWorldRestarter {
         myWorld.getAudioPlayer().onRestart();
     }
 
-    private void onRestartMisils(){
-        for(int i = 0; i < misils.length;i++){
-            misils[i].onRestart(ANCHO+ANCHO*((i+0.f)/misils.length));
+    private void onRestartMisils() {
+        for (int i = 0; i < misils.length; i++) {
+            misils[i].onRestart(ANCHO + ANCHO * ((i + 0.f) / misils.length));
         }
     }
 
-    private void onRestartInvertors(){
-        for(int i = 0; i < invertors.length;i++){
-            invertors[i].onRestart(ANCHO+ANCHO*((i+0.f)/invertors.length));
+    private void onRestartInvertors() {
+        for (int i = 0; i < invertors.length; i++) {
+            invertors[i].onRestart(ANCHO + ANCHO * ((i + 0.f) / invertors.length));
         }
     }
 
-    private void onRestartVendajes(){
-        for(int i = 0; i < vendajes.length;i++){
-            vendajes[i].onRestart(ANCHO+ANCHO*((i+0.f)/vendajes.length));
+    private void onRestartVendajes() {
+        for (int i = 0; i < vendajes.length; i++) {
+            vendajes[i].onRestart(ANCHO + ANCHO * ((i + 0.f) / vendajes.length));
         }
     }
 
-    private void onRestartBackground(){
-        for(int i = 0; i < myWorld.getBg().length;i++){
-            myWorld.getBg()[i].onRestart(ANCHO*i);
+    private void onRestartBackground() {
+        for (int i = 0; i < myWorld.getBg().length; i++) {
+            myWorld.getBg()[i].onRestart(ANCHO * i);
         }
     }
 
-    private void onRestartDeltaAnimation(){
+    private void onRestartDeltaAnimation() {
         myWorld.setExplodeDelta(0);
         myWorld.setPreviousDelta(0);
     }

@@ -34,11 +34,11 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(myWorld.getCurrentState()== GameState.RUNNING){
+        if (myWorld.getCurrentState() == GameState.RUNNING) {
             myWorld.getHelicopter().onClick();
-        } else if (myWorld.getCurrentState()== GameState.READY){
+        } else if (myWorld.getCurrentState() == GameState.READY) {
             myWorld.setState(GameState.RUNNING);
-        } else if (myWorld.getCurrentState()== GameState.GAMEOVER){
+        } else if (myWorld.getCurrentState() == GameState.GAMEOVER) {
             myWorld.setState(GameState.READY);
             myWorld.onRestart();
         }

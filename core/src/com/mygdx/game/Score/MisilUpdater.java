@@ -11,38 +11,38 @@ public class MisilUpdater {
 
     private Misil[] misils;
     private Score score;
-    private float acceleration = AssetHelper.getWidthPixels()*100/1196;
+    private float acceleration = AssetHelper.getWidthPixels() * 100 / 1196;
     private boolean isIncrementing;
 
-    public MisilUpdater(Misil[] misils,Score score) {
+    public MisilUpdater(Misil[] misils, Score score) {
         this.misils = misils;
-        this.score=score;
-        isIncrementing=false;
+        this.score = score;
+        isIncrementing = false;
     }
 
-    public void update(){
+    public void update() {
         int actualScore = (int) score.getScoreTime();
-        if(!isIncrementing && actualScore%25==0 && actualScore!=0){
-            if(misils[0].getMaxVelocity() < misils[0].getVelocity().x){
+        if (!isIncrementing && actualScore % 25 == 0 && actualScore != 0) {
+            if (misils[0].getMaxVelocity() < misils[0].getVelocity().x) {
                 misilsIncrement();
-                score.setIncremment(score.getIncremment()+2);
-                isIncrementing=true;
+                score.setIncremment(score.getIncremment() + 2);
+                isIncrementing = true;
             }
         }
 
-        if(actualScore%25!=0){
-            isIncrementing=false;
+        if (actualScore % 25 != 0) {
+            isIncrementing = false;
         }
 
     }
 
     private void misilsIncrement() {
-        for(int i = 0; i < misils.length; i++){
-            misils[i].incremment(acceleration,0);
+        for (int i = 0; i < misils.length; i++) {
+            misils[i].incremment(acceleration, 0);
         }
     }
 
-    public void onRestart(){
+    public void onRestart() {
         isIncrementing = false;
     }
 }

@@ -11,34 +11,33 @@ import com.mygdx.game.assets.AssetHelper;
 public class Vendaje {
     private Vector2 position;
     private Vector2 velocity;
-    private float max= Gdx.graphics.getHeight()-getHeight()-20;
+    private float max = Gdx.graphics.getHeight() - getHeight() - 20;
 
-    private int width,height;
+    private int width, height;
     private Rectangle bounds;
 
-    private float initialVelocity =  - (AssetHelper.getWidthPixels()*350/1196);
+    private float initialVelocity = -(AssetHelper.getWidthPixels() * 350 / 1196);
 
 
     public Vendaje(float x, float y, int width, int height) {
-        this.width=width;
-        this.height=height;
-        position = new Vector2(x,y);
-        velocity = new Vector2(initialVelocity,0);
-        bounds= new Rectangle(x,y,width,height);
+        this.width = width;
+        this.height = height;
+        position = new Vector2(x, y);
+        velocity = new Vector2(initialVelocity, 0);
+        bounds = new Rectangle(x, y, width, height);
 
     }
 
-    public void update(float delta){
+    public void update(float delta) {
 
         position.add(velocity.cpy().scl(delta));
 
-        if(position.x <= -getWidth()){
-            position.x= Gdx.graphics.getWidth();
-            position.y = ((float)(Math.random()*(max)))-10;
+        if (position.x <= -getWidth()) {
+            position.x = Gdx.graphics.getWidth();
+            position.y = ((float) (Math.random() * (max))) - 10;
         }
         bounds.setPosition(position);
     }
-
 
 
     public float getX() {
@@ -57,27 +56,28 @@ public class Vendaje {
         return height;
     }
 
-    public Rectangle getBounds(){
+    public Rectangle getBounds() {
         return bounds;
     }
 
-    public void hasCollided(){
-        position.x= Gdx.graphics.getWidth();
-        position.y = ((float)(Math.random()*(max)))-10;
+    public void hasCollided() {
+        position.x = Gdx.graphics.getWidth();
+        position.y = ((float) (Math.random() * (max))) - 10;
     }
 
-    public void onRestart(float x){
+    public void onRestart(float x) {
         position.x = x;
-        position.y = ((float)(Math.random()*(max)))-10;
+        position.y = ((float) (Math.random() * (max))) - 10;
         velocity.x = initialVelocity;
         velocity.y = 0;
     }
-    public void updateGameOver(float delta){
+
+    public void updateGameOver(float delta) {
 
         position.add(velocity.cpy().scl(delta));
 
-        if(position.x <= -getWidth()){
-            position.x= -getWidth()*2;
+        if (position.x <= -getWidth()) {
+            position.x = -getWidth() * 2;
         }
         bounds.setPosition(position);
     }

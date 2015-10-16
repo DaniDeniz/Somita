@@ -42,7 +42,7 @@ public class GameScreen implements Screen{
     public void render(float delta) {
         runTime+=delta;
         world.update(delta);
-        renderer.render(runTime);
+        renderer.render(runTime,delta);
         //Gdx.gl.glClearColor(10 / 255.0f, 15 / 255.0f, 230 / 255.0f, 1);
        // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

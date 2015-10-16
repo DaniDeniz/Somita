@@ -44,16 +44,19 @@ public class GameWorldUpdater {
     }
 
     public void update(float delta, GameState currentState) {
-        switch (currentState){
-            case READY: updateReady(delta);
+        switch (currentState) {
+            case READY:
+                updateReady(delta);
                 break;
-            case RUNNING: updateRunning(delta);
+            case RUNNING:
+                updateRunning(delta);
                 break;
-            case GAMEOVER: updateGameOver(delta);
+            case GAMEOVER:
+                updateGameOver(delta);
         }
     }
 
-    private void updateRunning(float delta){
+    private void updateRunning(float delta) {
         helicopter.update(delta);
         misilUpdate(delta);
         misilInversorUpdate(delta);
@@ -66,34 +69,34 @@ public class GameWorldUpdater {
     }
 
     private void vendajeUpdate(float delta) {
-        for(int i = 0; i < vendajes.length; i++){
+        for (int i = 0; i < vendajes.length; i++) {
             vendajes[i].update(delta);
         }
     }
 
-    private void misilUpdate(float delta){
-        for(int i = 0; i < misils.length; i++){
+    private void misilUpdate(float delta) {
+        for (int i = 0; i < misils.length; i++) {
             misils[i].update(delta);
         }
     }
 
-    private void misilInversorUpdate(float delta){
-        for(int i = 0; i < invertors.length; i++){
+    private void misilInversorUpdate(float delta) {
+        for (int i = 0; i < invertors.length; i++) {
             invertors[i].update(delta);
         }
     }
 
     private void updateBackground(float delta) {
-        for(int i = 0; i < myWorld.getBg().length; i++){
+        for (int i = 0; i < myWorld.getBg().length; i++) {
             myWorld.getBg()[i].update(delta);
         }
     }
 
-    private void updateReady(float delta){
+    private void updateReady(float delta) {
         updateBackground(delta);
     }
 
-    private void updateGameOver(float delta){
+    private void updateGameOver(float delta) {
         updateGameOverMisils(delta);
         updateGameOverVendaje(delta);
         updateGameOverMisilsInvertor(delta);
@@ -103,7 +106,7 @@ public class GameWorldUpdater {
 
     private void updateGameOverHighScore() {
         int highScore = AssetLoader.pref.getInteger("HighScore");
-        if (highScore <= (myWorld.getScore().getValue())){
+        if (highScore <= (myWorld.getScore().getValue())) {
             myWorld.getAudioPlayer().playSoma();
         } else {
             myWorld.getAudioPlayer().playEzequie();
@@ -111,28 +114,28 @@ public class GameWorldUpdater {
     }
 
     private void updateGameOverVendaje(float delta) {
-        for(int i = 0; i < vendajes.length; i++){
+        for (int i = 0; i < vendajes.length; i++) {
             vendajes[i].updateGameOver(delta);
         }
     }
 
     private void updateGameOverMisils(float delta) {
-        for(int i = 0; i < misils.length; i++){
+        for (int i = 0; i < misils.length; i++) {
             misils[i].updateGameOver(delta);
         }
     }
 
     private void updateGameOverMisilsInvertor(float delta) {
-        for(int i = 0; i < invertors.length; i++){
+        for (int i = 0; i < invertors.length; i++) {
             invertors[i].updateGameOver(delta);
         }
     }
 
-    private void collision(){
+    private void collision() {
         collisionManager.isCollisionMisil();
         collisionManager.isCollisionMisilInvertor();
         collisionManager.isCollisionDown();
-        if(collisionManager.isCollisionVendaje()) {
+        if (collisionManager.isCollisionVendaje()) {
             score.vendajeCollided();
         }
     }

@@ -11,40 +11,40 @@ import com.mygdx.game.assets.AssetHelper;
 public class Misil {
     protected Vector2 position;
     protected Vector2 velocity;
-    protected float max= Gdx.graphics.getHeight()-getHeight()-20;
+    protected float max = Gdx.graphics.getHeight() - getHeight() - 20;
 
-    protected int width,height;
+    protected int width, height;
     protected Rectangle bounds;
-    protected int maxVelocity = - (AssetHelper.getWidthPixels()*900/1196);
-    protected float inicialVelocity = - (AssetHelper.getWidthPixels()*600/1196);
+    protected int maxVelocity = -(AssetHelper.getWidthPixels() * 900 / 1196);
+    protected float inicialVelocity = -(AssetHelper.getWidthPixels() * 600 / 1196);
 
 
     public Misil(float x, float y, int width, int height) {
-        this.width=width;
-        this.height=height;
-        position = new Vector2(x,y);
-        velocity = new Vector2(inicialVelocity,0);
-        bounds= new Rectangle(x,y,width,height);
+        this.width = width;
+        this.height = height;
+        position = new Vector2(x, y);
+        velocity = new Vector2(inicialVelocity, 0);
+        bounds = new Rectangle(x, y, width, height);
 
     }
 
-    public void update(float delta){
+    public void update(float delta) {
 
         position.add(velocity.cpy().scl(delta));
 
-        if(position.x <= -getWidth()){
-            position.x= Gdx.graphics.getWidth();
-            position.y = ((float)(Math.random()*(max)))-10;
+        if (position.x <= -getWidth()) {
+            position.x = Gdx.graphics.getWidth();
+            position.y = ((float) (Math.random() * (max))) - 10;
         }
         bounds.setPosition(position);
     }
 
-    public void updateGameOver(float delta){
+    public void updateGameOver(float delta) {
 
         position.add(velocity.cpy().scl(delta));
 
-        if(position.x <= -getWidth()){
-            position.x= -getWidth()*2;
+        if (position.x <= -getWidth()) {
+            position.x = -getWidth() * 2;
         }
         bounds.setPosition(position);
     }
@@ -66,7 +66,7 @@ public class Misil {
         return height;
     }
 
-    public Rectangle getBounds(){
+    public Rectangle getBounds() {
         return bounds;
     }
 
@@ -74,8 +74,8 @@ public class Misil {
         return velocity;
     }
 
-    public void setVelocity(float x){
-        velocity.x=x;
+    public void setVelocity(float x) {
+        velocity.x = x;
     }
 
     public int getMaxVelocity() {
@@ -83,20 +83,20 @@ public class Misil {
         return maxVelocity;
     }
 
-    public void incremment(float x, float y){
-        if(velocity.x > maxVelocity){
-            velocity.add(-x,y);
+    public void incremment(float x, float y) {
+        if (velocity.x > maxVelocity) {
+            velocity.add(-x, y);
         }
     }
 
-    public void hasCollided(){
-        position.x= Gdx.graphics.getWidth();
-        position.y = ((float)(Math.random()*(max)))-10;
+    public void hasCollided() {
+        position.x = Gdx.graphics.getWidth();
+        position.y = ((float) (Math.random() * (max))) - 10;
     }
 
-    public void onRestart(float x){
+    public void onRestart(float x) {
         position.x = x;
-        position.y = ((float)(Math.random()*(max)))-10;
+        position.y = ((float) (Math.random() * (max))) - 10;
         velocity.x = inicialVelocity;
         velocity.y = 0;
     }

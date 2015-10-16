@@ -59,7 +59,7 @@ public class GameWorld {
         collisionManager = new CollisionManager(this);
         restarter = new GameWorldRestarter(this);
         updater = new GameWorldUpdater(this);
-        audioPlayer = new AudioPlayer(score);
+        audioPlayer = new AudioPlayer(this);
 
     }
 

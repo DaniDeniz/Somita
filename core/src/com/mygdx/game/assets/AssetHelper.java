@@ -7,18 +7,11 @@ public class AssetHelper {
 
     private static int widthPixels;
     private static int heightPixels;
-    private static float density;
-
-    public static float getDensity() {
-        return density;
-    }
 
 
-
-    public AssetHelper(int w, int h, float density) {
-        this.widthPixels =w;
-        this.heightPixels =h;
-        this.density =density;
+    public AssetHelper(int w, int h) {
+        this.widthPixels = w;
+        this.heightPixels = h;
     }
 
     public static int getWidthPixels() {

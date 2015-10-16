@@ -17,8 +17,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         int heightPixels= getResources().getDisplayMetrics().heightPixels;
 		int widthPixels= getResources().getDisplayMetrics().widthPixels;
-		float density= getResources().getDisplayMetrics().density;
-        new AssetHelper(widthPixels,heightPixels,density);
+        new AssetHelper(widthPixels,heightPixels);
 		initialize(new Somita(), config);
 	}
 }

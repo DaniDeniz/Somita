@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.*;
 public interface ActorInterface {
 
 
-
     public abstract void update(float delta);
 
     public abstract void onClick();
@@ -25,7 +24,6 @@ public interface ActorInterface {
     public abstract void onRestart();
 
     public abstract Rectangle getBounds();
-
 
 
 }

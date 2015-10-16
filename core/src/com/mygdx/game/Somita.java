@@ -13,13 +13,13 @@ import com.mygdx.game.screens.GameScreen;
 public class Somita extends Game {
 
 
-	@Override
-	public void create () {
+    @Override
+    public void create() {
         AssetLoader.load();
-		setScreen(new GameScreen());
-	}
+        setScreen(new GameScreen());
+    }
 
-    public void dispose(){
+    public void dispose() {
         super.dispose();
         AssetLoader.dispose();
     }
