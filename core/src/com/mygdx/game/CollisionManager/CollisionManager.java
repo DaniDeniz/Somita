@@ -32,7 +32,7 @@ public class CollisionManager {
         for (int i = 0; i < misils.length; i++) {
             if (helicopter.getBounds().overlaps(misils[i].getBounds())) {
                 myWorld.setState(GameState.GAMEOVER);
-                HighScoreManager.highScore((int) myWorld.getScore().getValue());
+                HighScoreManager.highScore(myWorld.getScore().getValue());
                 return true;
             }
         }
@@ -47,6 +47,7 @@ public class CollisionManager {
                 helicopter.setIncrem(helicopter.getIncrem() * -1);
                 helicopter.setHasBeenInverted(true);
                 invertors[i].hasCollided();
+                myWorld.getAudioPlayer().playInvertorExplosion();
                 return true;
             }
         }
@@ -57,6 +58,8 @@ public class CollisionManager {
     public boolean isCollisionDown() {
         if (helicopter.getY() < 0) {
             myWorld.setState(GameState.GAMEOVER);
+            HighScoreManager.highScore(myWorld.getScore().getValue());
+
             return true;
         }
         return false;

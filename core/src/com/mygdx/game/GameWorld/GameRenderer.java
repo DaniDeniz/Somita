@@ -73,16 +73,18 @@ public class GameRenderer {
         // Draw bird at its coordinates. Retrieve the Animation object from
         // AssetLoader
         // Pass in the runTime variable to get the current frame.
+        renderInversorNotification(batcher);
         renderVendaje(batcher);
         renderMisiles(batcher);
         renderMisilesInvertor(batcher);
+        renderScore(batcher);
         renderHelicopter(batcher, runTime);
         renderInversorExplosion(batcher,delta);
 
-        renderInversorNotification(batcher);
+
         renderReadyMensaje(batcher);
 
-        renderScore(batcher);
+
 
         // End SpriteBatch
         batcher.end();
